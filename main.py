@@ -1,5 +1,7 @@
-import tkinter as tk
 import logging
+import tkinter as tk
+
+from bitmex import get_contracts
 
 logger = logging.getLogger()
 
@@ -18,5 +20,24 @@ logger.addHandler(stream_handler)
 logger.addHandler(file_handler)
 
 if __name__ == '__main__':
+    bitmex_contracts = get_contracts()
+
     root = tk.Tk()
+    root.configure(bg='gray12')
+
+    i = 0
+    j = 0
+
+    calibri_font = ('Calibri', 11, 'normal')
+
+    for contract in bitmex_contracts:
+        label_widget = tk.Label(root, text=contract, bg='gray12', fg='SteelBlue1', width=10)
+        label_widget.grid(row=i, column=j, sticky="ew")
+
+        if i == 4:
+            j += 1
+            i = 0
+        else:
+            i += 1
+
     root.mainloop()
